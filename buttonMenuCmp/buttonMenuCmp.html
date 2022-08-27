@@ -1,0 +1,51 @@
+<template>
+    <div class="slds-p-around_medium lgc-bg list_view_and_table_container">
+            
+            <div class="slds-form-element">
+                <div class="slds-form-element__control">
+                    <div class="slds-combobox_container slds-size_small">
+                        <div class={dropdownTriggerClass} aria-expanded="false" aria-haspopup="listbox" role="combobox">
+                            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                                role="none" onclick={handleClickExtend} >
+<!-- button added -->
+                            <lightning-button label="Add Activity" icon-name="utility:add" variant="brand"  class="button"></lightning-button>
+                            
+                        </div>
+                            <div id="listbox-id-1" class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid"
+                                role="listbox">
+                                <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                    <template for:each={items} for:item="option">
+                                        <li role="presentation" class="slds-listbox__item" key={option.value}>
+                                            <div class="slds-media slds-listbox__option slds-listbox__option_plain slds-media_small"
+                                                data-filter={option.value} onclick={handleFilterChangeButton}>
+                                                <span class="slds-media__figure slds-listbox__option-icon"
+                                                    data-filter={option.value}></span>
+                                                <span class="slds-media__body" data-filter={option.value}>
+                                                    <span class="slds-truncate" title="Option A"
+                                                        data-filter={option.value}>{option.label}</span>
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </template>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+
+    <template if:true={showTaskModal}>
+        <c-task-creation
+            custom-form-modal={showTaskModal}>
+        </c-task-creation>
+    </template>    
+
+    <template if:true={showEventModal}>
+        <c-event-creation
+        show-record-type={showEventModal}>
+        </c-event-creation>
+    </template>
+    
+</template>

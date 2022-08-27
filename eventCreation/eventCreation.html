@@ -1,0 +1,116 @@
+<template>
+    <!-- Record Type Selection Screen -->
+    <!-- modal start -->
+    <template if:true={showRecordType}>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        
+        <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideRecordTypeModal}>
+
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                    <!-- <span class="slds-assistive-text">Close</span> -->
+
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">Create New Event</h2>
+            </header>
+
+            <!-- modal body start -->
+           
+            <div class="slds-modal__content slds-p-around_medium">
+
+                <div class="slds-p-horizontal_small">
+                    <h3>Please select a record type</h3>
+                    <lightning-combobox name="recordType" label="Record Type" placeholder="Choose Status"
+                    value={value} 
+                    options={recordTypeId1}
+                    onchange={handleChange}
+                    >
+                    </lightning-combobox>
+                </div>
+                <div>
+                    Record type Id is {recordTypeId}
+                </div> 
+
+                <!-- modal footer start -->
+
+                <div slot="footer" class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <lightning-button class="slds-p-right_small" label="Cancel" onclick={hideRecordTypeModal}></lightning-button>
+                        <lightning-button variant="brand" label="Next" onclick={handleNext}></lightning-button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Creates the shaded backdrop used behind the modal. -->
+    <div class="slds-backdrop slds-backdrop_open"> 
+    </div>
+    </template>
+    <!-- modal end -->
+
+    <!-- Event Input Form -->
+    <!-- modal start -->
+    <template if:true={showForm}>
+
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        
+        <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={hideFormModal}>
+
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small"></lightning-icon>
+                    <!-- <span class="slds-assistive-text">Close</span> -->
+
+                </button>
+                <h2 class="slds-text-heading_medium slds-hyphenate">Create New Event</h2>
+            </header>
+
+            <!-- modal body start -->
+           
+            <div class="slds-modal__content slds-p-around_medium">
+
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-input label=Subject title="Subject" value={subject_value} onchange={handleChange}></lightning-input>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-input type="number" label="Phone" title="Phone" value={comment_value} onchange={handleChange} ></lightning-input>
+                    </div>
+                    
+                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-input type="date" title="ActivityDate" label="Due Date" onchange={handleChange}> </lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-input-field field-name={DueDate} ></lightning-input-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-textarea label=Comments title="Description" value={comment_value} onchange={handleChange}></lightning-textarea>
+                    </div>
+                    
+                </div>
+
+                <!-- modal footer start -->
+
+                <div slot="footer" class="slds-clearfix">
+                    <div class="slds-float_right">
+                        <lightning-button class="slds-p-right_small" label="Cancel" onclick={hideFormModal}></lightning-button>
+                        <lightning-button variant="brand" label="Save" onclick={handleSuccess}></lightning-button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Creates the shaded backdrop used behind the modal. -->
+    <div class="slds-backdrop slds-backdrop_open"> 
+    </div>
+    </template>
+
+
+</template>
