@@ -1,5 +1,5 @@
 On click of Button -
-![image](https://user-images.githubusercontent.com/101804960/187160399-6aa61e8e-5bb5-450d-b8c8-da3d2a70a792.png)
+![image](https://user-images.githubusercontent.com/101804960/187164581-15b1d637-370a-4415-9ea2-a1ee28b92d80.png)
 
 Select a record Type -
 ![image](https://user-images.githubusercontent.com/101804960/187163078-8dfb40c5-0825-41f7-b363-aa73e1d42950.png)
