@@ -1,4 +1,5 @@
 On click of Button -
+
 ![image](https://user-images.githubusercontent.com/101804960/187164581-15b1d637-370a-4415-9ea2-a1ee28b92d80.png)
 
 Select a record Type -
