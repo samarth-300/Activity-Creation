@@ -1,124 +1,10 @@
-// import { LightningElement,api } from 'lwc';
-// import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-// //import DATEFIELD from '@salesforce/schema/event.ActivityDate';
-// import saveEvent from '@salesforce/apex/CreateEvent.saveEvent';
-
-// export default class EventCreation extends LightningElement {
-
-//     eventInputs={};
-//     @api customFormModal;
-//     //DueDate= DATEFIELD;
-
-//     // get customFormModal(){
-//     //     return true;
-//     // }
-    
-
-//     hideModal(){
-//         this.customFormModal=false;
-//     }
-
-//     handleChange(event) {
-//         console.log(this.customFormModal)
-//         let fieldName=event.target.title;
-//         let fieldValue=event.target.value;
-//         console.log(event.target.title)
-//         console.log(event.target.value);  // field Values are captured
-
-//         this.eventInputs[fieldName]=fieldValue;
-
-//         //     //this.fieldChangesArray.Id=this.accountRecordId;
-//         //     let fieldName = event.target.fieldName; // field Names are captured
-            
-//         //     this.fieldChangesArray[fieldName] = fieldValue.trim(); //field names and values are pushed into fieldChangesArray
-//         //     //console.log('this.fieldChangesArray', this.fieldChangesArray)
-//         //     this.fieldChangesStringArray=JSON.stringify(this.fieldChangesArray);
-//     }
-
-//     handleSuccess(){
-//         saveEvent({eventInputs:JSON.stringify(this.eventInputs)})
-//         .then(event => {
-//             console.log('this is saved event',event);
-//             this.dispatchEvent(
-//                 new ShowToastEvent({
-//                     title:"Success",
-//                     message:"Event Created",
-//                     variant:"success"
-//                 })
-//             );
-//             this.eventInputs={};
-//         console.log(this.eventInputs,"form inputs")
-//         })
-//         .catch(error => {
-//             console.log('error in Global search',error); // if any errors,they are logged 
-//         });
-//     }
-    
-// }
-
 import { LightningElement,api,track} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-//import DATEFIELD from '@salesforce/schema/Task.ActivityDate';
 import saveEvent from '@salesforce/apex/CreateEvent.saveEvent';
 import getEventRecordTypes from '@salesforce/apex/FetchRecordTypes.getEventRecordTypes'
 
 export default class EventCreation extends LightningElement {
 
-    eventInputs={};
-    @api customFormModal;
-    DueDate= DATEFIELD;
-
-    // get customFormModal(){
-    //     return true;
-    // }
-    
-
-    hideRecordTypeModal(){
-        this.showRecordType=false;
-    }
-
-    hideFormModal(){
-        this.showForm=false;
-    }
-
-    handleChange(event) {
-        console.log(this.customFormModal)
-        let fieldName=event.target.title;
-        let fieldValue=event.target.value;
-        console.log(event.target.title)
-        console.log(event.target.value);  // field Values are captured
-
-        this.eventInputs[fieldName]=fieldValue;
-
-        //     //this.fieldChangesArray.Id=this.accountRecordId;
-        //     let fieldName = event.target.fieldName; // field Names are captured
-            
-        //     this.fieldChangesArray[fieldName] = fieldValue.trim(); //field names and values are pushed into fieldChangesArray
-        //     //console.log('this.fieldChangesArray', this.fieldChangesArray)
-        //     this.fieldChangesStringArray=JSON.stringify(this.fieldChangesArray);
-    }
-
-    handleSuccess(){
-        saveEvent({eventInputs:JSON.stringify(this.eventInputs)})
-        .then(event => {
-            console.log('this is saved event',event);
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title:"Success",
-                    message:"event Created",
-                    variant:"success"
-                })
-            );
-            this.eventInputs={};
-        console.log(this.eventInputs,"form inputs")
-        })
-        .catch(error => {
-            console.log('error in Global search',error); // if any errors,they are logged 
-        });
-    }
-
-    @track statusOptions;
-    @track value;
     @api objectApiName;
     @track showForm=false;
     @api showRecordType;
@@ -126,7 +12,7 @@ export default class EventCreation extends LightningElement {
     @track objectInfo;
 
 
-    connectedCallback() {
+    connectedCallback() {  // loads the values to record types
         getEventRecordTypes()
             .then(result => {
                 this.objectInfo = result;
@@ -139,7 +25,7 @@ export default class EventCreation extends LightningElement {
             });
     }
     
-    get recordTypeId1() {
+    get recordTypeOptions() {
         var recordtypeinfo = JSON.parse(JSON.stringify(this.objectInfo));
         var uiCombobox = [];
         console.log("recordtype" , recordtypeinfo);
@@ -154,16 +40,61 @@ export default class EventCreation extends LightningElement {
       return uiCombobox;
     }
 
-    handleChange(event) {
+    handleRecordType(event) {   
         
-        console.log("Selected label --> ",event.detail.label);
-        console.log("Layout value --> ", event.detail.value)
-        console.log("Event info -->",JSON.stringify(event.detail))
+        console.log("Id of RecordType Selected-->",JSON.stringify(event.detail))
         this.recordTypeId=event.detail.value;
     }
 
-    handleNext(){
+    handleNext(){  // on click of next button
         this.showRecordType=false;
         this.showForm=true;
+    }
+
+    eventInputs={};
+    @api customFormModal;
+    
+    subjectValues=[
+        { label: 'Call', value: 'Call' },
+        { label: 'Email', value: 'Email' },
+        { label: 'Meeting', value: 'Meeting' },
+        { label: 'Send Letter/Quote', value: 'Send/Letter Quote' },
+        { label: 'Other', value: 'Other' },
+    ];
+
+    hideRecordTypeModal(){
+        this.showRecordType=false;
+    }
+
+    hideFormModal(){
+        this.showForm=false;
+    }
+
+    handleChange(event) {
+        let fieldName=event.target.title;
+        let fieldValue=event.target.value;
+
+        this.eventInputs[fieldName]=fieldValue; // input values are assigned
+    }
+
+    handleSuccess(){  // on click of save burtton
+        saveEvent({eventInputs:JSON.stringify(this.eventInputs)})
+        .then(event => {
+            console.log('this is saved event',event);
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title:"Success",
+                    message:"event Created",
+                    variant:"success"
+                })
+            );
+            this.eventInputs={};
+        
+        const evt=new CustomEvent('eventsave');   // custom event dispatched to the parent comonent to let know that the form is saved
+        this.dispatchEvent(evt);
+        })
+        .catch(error => {
+            console.log('error in Global search',error); // if any errors,they are logged 
+        });
     }
 }
