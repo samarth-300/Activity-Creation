@@ -23,16 +23,15 @@
 
                 <div class="slds-p-horizontal_small">
                     <h3>Please select a record type</h3>
-                    <lightning-combobox name="recordType" label="Record Type" placeholder="Choose Status"
-                    value={value} 
-                    options={recordTypeId1}
-                    onchange={handleChange}
+                    <lightning-combobox label="Record Type" placeholder="Choose RecordType"
+                    options={recordTypeOptions}
+                    onchange={handleRecordType}
                     >
                     </lightning-combobox>
+                    <div>
+                        Record type Id is {recordTypeId}
+                    </div> 
                 </div>
-                <div>
-                    Record type Id is {recordTypeId}
-                </div> 
 
                 <!-- modal footer start -->
 
@@ -75,24 +74,33 @@
             <div class="slds-modal__content slds-p-around_medium">
 
                 <div class="slds-grid slds-wrap">
-                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
-                        <lightning-input label=Subject title="Subject" value={subject_value} onchange={handleChange}></lightning-input>
+                    <div class="slds-col slds-size_2-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-input label="Location" title="Location" value={subject_value} onchange={handleChange} required></lightning-input>
+                    </div>
+                                       
+
+                    <div class="slds-col slds-size_2-of-3 slds-p-horizontal--medium slds-m-bottom_medium">
+                        <lightning-input type="datetime" title="StartDateTime" label="Start" onchange={handleChange} required> </lightning-input>
                     </div>
 
-                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
-                        <lightning-input type="number" label="Phone" title="Phone" value={comment_value} onchange={handleChange} ></lightning-input>
+                    <div>
+                        <lightning-combobox
+                                title="Subject"
+                                label="Subject"
+                                placeholder="Select Subject"
+                                options={subjectValues}
+                                onchange={handleChange} 
+                                required>
+                        </lightning-combobox>
                     </div>
                     
                     <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
-                        <lightning-input type="date" title="ActivityDate" label="Due Date" onchange={handleChange}> </lightning-input>
+                        <lightning-input type="datetime" label="End" title="EndDateTime"  onchange={handleChange} required></lightning-input>
                     </div>
-                    <div class="slds-col slds-size_1-of-2 slds-p-horizontal--medium slds-m-bottom_medium">
-                        <lightning-input-field field-name={DueDate} ></lightning-input-field>
-                    </div>
+                    
                     <div class="slds-col slds-size_1-of-1 slds-p-horizontal--medium slds-m-bottom_medium">
-                        <lightning-textarea label=Comments title="Description" value={comment_value} onchange={handleChange}></lightning-textarea>
+                        <lightning-textarea label=Description title="Description" onchange={handleChange}></lightning-textarea>
                     </div>
-                    
                 </div>
 
                 <!-- modal footer start -->
