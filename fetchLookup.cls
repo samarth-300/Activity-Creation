@@ -1,8 +1,8 @@
 public with sharing class fetchLookup {
 
-    private static List<RecentlyViewed> queryRecentByType(String objectName , List<String> restrictedIds) {
+    private static List<RecentlyViewed> queryRecentByType(String objectName) {
         string recentItemQuery;
-        recentItemQuery = 'SELECT Id FROM RecentlyViewed WHERE Type ='+ '\''+ objectName + '\'' +' AND Id NOT IN :restrictedIds LIMIT 5';
+        recentItemQuery = 'SELECT Id FROM RecentlyViewed WHERE Type ='+ '\''+ objectName + '\'' ;
         system.debug('recentItemQuery'+recentItemQuery);
         List<SObject> recentRecords = new List<SObject>();
         recentRecords=database.query(recentItemQuery);
@@ -12,9 +12,9 @@ public with sharing class fetchLookup {
 	}
     
 	@AuraEnabled(cacheable=true)
-	public static String getRecent(Searchable searcher, List<String> restrictedIds) {
+	public static String getRecent(Searchable searcher) {
 		Set<Id> recentIds = new Set<Id>();
-		for(RecentlyViewed rv : queryRecentByType(searcher.objectName, restrictedIds)) {
+		for(RecentlyViewed rv : queryRecentByType(searcher.objectName)) {
 			recentIds.add(rv.Id);
 		}
         system.debug('recentIds'+recentIds);
@@ -28,7 +28,7 @@ public with sharing class fetchLookup {
 	}
 
 	@AuraEnabled(cacheable=true)
-	public static String getRecords(Searchable searcher, List<String> restrictedIds) { // called when text is entered in textbox
+	public static String getRecords(Searchable searcher) { // called when text is entered in textbox
 		String find = 'FIND \'' + String.escapeSingleQuotes(searcher.searchTerm) + '*\' IN ALL FIELDS';
 		String returning = 'RETURNING ' + getReturning(searcher.objectName, searcher.fields);
 		String limitter = 'LIMIT ' + 5;
@@ -48,7 +48,7 @@ public with sharing class fetchLookup {
 	private static String joinReturnFields(List<String> fields) { // Joins the List of fields into a string
         //List<String> finalList = new List<String>();
         String tempString;
-        tempString = String.escapeSingleQuotes(String.join(fields, ', ')) + ' WHERE id NOT IN :restrictedIds';
+        tempString = String.escapeSingleQuotes(String.join(fields, ', ')) ;
         system.debug('tempString'+tempString);
 		return ' (' + tempString + ')';
 	}
