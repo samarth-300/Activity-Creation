@@ -1,9 +1,8 @@
 import { LightningElement, track, api } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class ButtonMenuCmp extends LightningElement {
-    //@track currentFilter = ALL_PRIORITY;
-    @track isExpanded = false;
-    //@track isLoaded = false;
+    @track isExpanded;
     @api showTaskModal;
     @api showEventModal;
     
@@ -21,15 +20,7 @@ export default class ButtonMenuCmp extends LightningElement {
     }
  
     handleFilterChangeButton(event) {
-        //this.isLoaded = false;
-        // let filter = event.target.dataset.filter;
         this.isExpanded = !this.isExpanded;
-        // if (filter !== this.currentFilter) {
-        //     this.currentFilter = event.target.dataset.filter;
-        //     setTimeout(() => {
-        //         this.handleFilterData(this.currentFilter), 0
-        //     });
-        // } 
         let selectedOption = event.target.dataset.filter;
         console.log("selected ==> ",event.target.dataset.filter)
         if(selectedOption=='task'){
@@ -39,18 +30,27 @@ export default class ButtonMenuCmp extends LightningElement {
         }        
     }
  
-    // handleFilterData(filter) {
-    //     if (filter === ALL_PRIORITY) {
-    //         this.itemsForCurrentView = this.allItems
-    //     } else {
-    //         this.itemsForCurrentView = this.allItems.filter(item => {
-    //             return item.Priority === filter;
-    //         })
-    //     }
-    //     this.isLoaded = true;
-    // }
- 
     handleClickExtend() {
         this.isExpanded = !this.isExpanded;
+    }
+
+    publishTaskToast(){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title:"Success",
+                message:"Task Created Successfully",
+                variant:"success"
+            })
+        );
+    }
+
+    publishEventToast(){
+        this.dispatchEvent(
+            new ShowToastEvent({
+                title:"Success",
+                message:"Event Created Successfully",
+                variant:"success"
+            })
+        );
     }
 }
