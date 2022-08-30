@@ -5,7 +5,6 @@ import getRecords from '@salesforce/apex/fetchLookup.getRecords'
 import getObjects from '@salesforce/apex/fetchObjects.getObjects'
  
 export default class Lookup extends LightningElement {
-  @api restrictedIds;
   @track inputValue = '';
   @track records = []
   @track focused = false
@@ -125,7 +124,7 @@ export default class Lookup extends LightningElement {
     const searcher = this.getSearcher()
     this.error = null
  
-    getRecords({ searcher, restrictedIds : this.restrictedIds })
+    getRecords({ searcher })
       .then(data => {
         const newData = JSON.parse(data)
         this.records = newData.flat()
@@ -148,7 +147,7 @@ export default class Lookup extends LightningElement {
     const searcher = this.getSearcher() // searcher is a key value pair object the is being sent as a parameter to apex
     this.error = null
  
-    getRecent({ searcher, restrictedIds : this.restrictedIds })
+    getRecent({ searcher })
       .then(data => {
         this.records = JSON.parse(data)
       })
