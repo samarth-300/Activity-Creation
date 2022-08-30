@@ -21,7 +21,7 @@
                                                 <span class="slds-media__figure slds-listbox__option-icon"
                                                     data-filter={option.value}></span>
                                                 <span class="slds-media__body" data-filter={option.value}>
-                                                    <span class="slds-truncate" title="Option A"
+                                                    <span class="slds-truncate" 
                                                         data-filter={option.value}>{option.label}</span>
                                                 </span>
                                             </div>
@@ -38,7 +38,7 @@
     <template if:true={showTaskModal}>
         <c-task-creation
             ontasksave={publishTaskToast}
-            custom-form-modal={showTaskModal}>
+            show-task-rec-type={showTaskModal}>
         </c-task-creation>
     </template>    
 
