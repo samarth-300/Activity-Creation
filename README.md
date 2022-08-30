@@ -14,5 +14,6 @@ On Save of form, custom event dispatched to the parent component
 
 ![image](https://user-images.githubusercontent.com/101804960/187164262-dc3ee1e1-5f00-4613-975e-db0589ad29de.png)
 
-Custom Lookup added
+Custom Lookup added-
+
 ![image](https://user-images.githubusercontent.com/101804960/187322829-7fb2fe7c-85d0-4df3-9d39-a5d13ef9b573.png)
